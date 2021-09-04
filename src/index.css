@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
-* {
+/** {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -11,7 +11,7 @@ body {
 }
 
 .container {
-  max-width: 500px;
+  max-width: 1000px;
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
@@ -109,4 +109,33 @@ body {
 footer {
   margin-top: 30px;
   text-align: center;
+}*/
+
+.board {
+	outline: 2px solid rgb(134,154,189);
+}
+
+.row {
+	height: 30px;
+}
+
+.box {
+	width: 30px;
+	height: 30px;
+	outline: 1px solid rgb(134,154,189);
+	display: inline-block;
+}
+
+.red-box {
+	width: 30px;
+	height: 30px;
+	outline: 2px solid rgb(172, 41, 41);
+	display: inline-block;
+}
+
+.blue-box {
+	width: 30px;
+	height: 30px;
+	outline: 2px solid rgb(59, 36, 189);
+	display: inline-block;
 }

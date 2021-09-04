@@ -4,6 +4,7 @@ import Tasks from './components/Tasks.js';
 import AddTask from './components/AddTask.js';
 import Footer from './components/Footer.js';
 import About from './components/About.js';
+import Board from './comps/SnakeBoard';
 import {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 
@@ -66,14 +67,16 @@ const App = () =>
 				<Header onToggle={toggleAddForm} formShowing={showAddTask}></Header>
 				<Route path='/' exact render={props => (
 					<>
-					{showAddTask ? <AddTask onSave={addTask}></AddTask> : <div></div>}
-					{tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onDubClick={toggleReminder}></Tasks> : <p>No tasks</p>}
+					<Board></Board>
+					{/*showAddTask ? <AddTask onSave={addTask}></AddTask> : <div></div>}
+					{tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onDubClick={toggleReminder}></Tasks> : <p>No tasks</p>*/}
 					</>
 				)}/>
 				<Route path='/about' component={About}/>
-				<Footer/>
+					<Footer/>
     		</div>
 		</Router>
+		
   	);
 };
 
