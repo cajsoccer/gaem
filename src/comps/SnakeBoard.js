@@ -1,13 +1,14 @@
 import React from 'react';
 
-let rows = new Array(20);
-for (let i = 0; i < 20; i++)
-	rows[i] = new Array(20);
-for (let i = 0; i < 20; i++)
-	for (let j = 0; j < 20; j++)
+let size = 20;
+let rows = new Array(size);
+for (let i = 0; i < size; i++)
+	rows[i] = new Array(size);
+for (let i = 0; i < size; i++)
+	for (let j = 0; j < size; j++)
 		rows[i][j] = 0;
 let direction = "down";
-const getRandPos = () => [Math.floor(Math.random() * 20), Math.floor(Math.random() * 20)];
+const getRandPos = () => [Math.floor(Math.random() * size), Math.floor(Math.random() * size)];
 window.addEventListener('keydown', e => 
 {
 	switch(e.key)
@@ -32,13 +33,21 @@ window.addEventListener('keydown', e =>
 });
 const checkGameOver = snake =>
 {
-	if (snake[0][0] < 0 || snake[0][1] << 0)
+	if (snake[0][0] < 0 || snake[0][0] > 20 || snake[0][1] < 0 || snake[0][1] > 20)
 		return true;
 	for (let i = 1; i < snake.length; i++)
 		if (snake[0][0] === snake[i][0] && snake[0][1] === snake[i][1])
 			return true;
 	return false;
 }
+const snakeBitSelf = (oldSnake, newHead) =>
+{
+	for (let i = 1; i < oldSnake.length; i++)
+		if (newHead[0] === oldSnake[i][0] && newHead[1] === oldSnake[i][1])
+			return true;
+	return false;
+}
+const gameOver = snake => alert(`Game Over. Your score is: ${snake.length}`);
 const changeFruitPos = (board, snake, fruitPos) => 
 {
 	let randPos = getRandPos();
@@ -59,6 +68,8 @@ const moveSnake = (board, snake, fruitPos, direction) =>
 	switch (direction)
 	{
 		case "left":
+			if (snake[0][1] === 0 || snakeBitSelf(snake, [snake[0][0], snake[0][1] - 1]))
+				gameOver(snake);
 			board[snake[0][0]][snake[0][1] - 1] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
 			for (let i = last; i > 0; i--)
@@ -75,6 +86,8 @@ const moveSnake = (board, snake, fruitPos, direction) =>
 			}
 			break;
 		case "right":
+			if (snake[0][1] === size - 1 || snakeBitSelf(snake, [snake[0][0], snake[0][1] + 1]))
+				gameOver(snake);
 			board[snake[0][0]][snake[0][1] + 1] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
 			for (let i = last; i > 0; i--)
@@ -91,6 +104,8 @@ const moveSnake = (board, snake, fruitPos, direction) =>
 			}
 			break;
 		case "up":
+			if (snake[0][0] === 0 || snakeBitSelf(snake, [snake[0][0] - 1, snake[0][1]]))
+				gameOver(snake);
 			board[snake[0][0] - 1][snake[0][1]] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
 			for (let i = last; i > 0; i--)
@@ -107,6 +122,8 @@ const moveSnake = (board, snake, fruitPos, direction) =>
 			}
 			break;
 		case "down":
+			if (snake[0][0] === size - 1 || snakeBitSelf(snake, [snake[0][0] + 1, snake[0][1]]))
+				gameOver(snake);
 			board[snake[0][0] + 1][snake[0][1]] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
 			for (let i = last; i > 0; i--)
@@ -154,6 +171,8 @@ export default class Board extends React.Component
         this.ticker = setInterval(() => 
 		{
             let newState = moveSnake(this.state.board, this.state.snake, this.state.fruit, direction);
+			//if (checkGameOver(newState.snake) === true)
+				//alert(`Game Over. Final Score: ${newState.snake.length}`);
 			this.setState(newState);
         }, 100);
     }
