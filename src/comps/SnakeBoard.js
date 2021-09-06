@@ -31,15 +31,6 @@ window.addEventListener('keydown', e =>
 			break;
 	}
 });
-const checkGameOver = snake =>
-{
-	if (snake[0][0] < 0 || snake[0][0] > 20 || snake[0][1] < 0 || snake[0][1] > 20)
-		return true;
-	for (let i = 1; i < snake.length; i++)
-		if (snake[0][0] === snake[i][0] && snake[0][1] === snake[i][1])
-			return true;
-	return false;
-}
 const snakeBitSelf = (oldSnake, newHead) =>
 {
 	for (let i = 1; i < oldSnake.length; i++)
@@ -52,15 +43,24 @@ const changeFruitPos = (board, snake, fruitPos) =>
 {
 	let randPos = getRandPos();
 	let randPosInSnake = false;
-	snake.forEach(b => {if (b === randPos) randPosInSnake = true;});
+	snake.forEach(b =>
+	{
+		if (b[0] === randPos[0] && b[1] === randPos[1])
+			randPosInSnake = true;
+	});
 	while (randPosInSnake)
 	{
 		randPos = getRandPos();
 		randPosInSnake = false;
-		snake.forEach(b => {if (b === randPos) randPosInSnake = true;});
+		snake.forEach(b => 
+		{
+			if (b[0] === randPos[0] && b[1] === randPos[1])
+				randPosInSnake = true;
+		});
 	}
 	fruitPos = randPos;
 	board[fruitPos[0]][fruitPos[1]] = 1;
+	console.log("new pos spawned");
 }
 const moveSnake = (board, snake, fruitPos, direction) =>
 {
