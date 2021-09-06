@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React from 'react';
 
 let rows = new Array(20);
 for (let i = 0; i < 20; i++)
@@ -7,7 +7,30 @@ for (let i = 0; i < 20; i++)
 	for (let j = 0; j < 20; j++)
 		rows[i][j] = 0;
 const getRandPos = () => [Math.floor(Math.random() * 20), Math.floor(Math.random() * 20)];
-const moveSnake = (board, snake, direction) =>
+const checkGameOver = snake =>
+{
+	if (snake[0][0] < 0 || snake[0][1] << 0)
+		return true;
+	for (let i = 1; i < snake.length; i++)
+		if (snake[0][0] == snake[i][0] && snake[0][1] == snake[i][1])
+			return true;
+	return false;
+}
+const changeFruitPos = (board, snake, fruitPos) => 
+{
+	let randPos = getRandPos();
+	let randPosInSnake = false;
+	snake.forEach(b => {if (b === randPos) randPosInSnake = true;});
+	while (randPosInSnake)
+	{
+		randPos = getRandPos();
+		randPosInSnake = false;
+		snake.forEach(b => {if (b === randPos) randPosInSnake = true;});
+	}
+	fruitPos = randPos;
+	board[fruitPos[0]][fruitPos[1]] = 1;
+}
+const moveSnake = (board, snake, fruitPos, direction) =>
 {
 	let last = snake.length - 1;
 	switch (direction)
@@ -21,6 +44,12 @@ const moveSnake = (board, snake, direction) =>
 				snake[i][1] = snake[i-1][1];
 			}
 			snake[0][1]--;
+			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1])
+			{
+				snake.push([snake[last][0], snake[last][1] + 1]);
+				board[snake[last+1][0]][snake[last+1][1]] = 2;
+				changeFruitPos(board, snake, fruitPos);
+			}
 			break;
 		case "right":
 			board[snake[0][0]][snake[0][1] + 1] = 2;
@@ -31,9 +60,15 @@ const moveSnake = (board, snake, direction) =>
 				snake[i][1] = snake[i-1][1];
 			}
 			snake[0][1]++;
+			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1])
+			{
+				snake.push([snake[last][0], snake[last][1] - 1]);
+				board[snake[last+1][0]][snake[last+1][1]] = 2;
+				changeFruitPos(board, snake, fruitPos);
+			}
 			break;
 		case "up":
-			board[snake[0][0] - 1][snake[0][0]] = 2;
+			board[snake[0][0] - 1][snake[0][1]] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
 			for (let i = last; i > 0; i--)
 			{
@@ -41,9 +76,15 @@ const moveSnake = (board, snake, direction) =>
 				snake[i][1] = snake[i-1][1];
 			}
 			snake[0][0]--;
+			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1])
+			{
+				snake.push([snake[last][0] + 1, snake[last][1]]);
+				board[snake[last+1][0]][snake[last+1][1]] = 2;
+				changeFruitPos(board, snake, fruitPos);
+			}
 			break;
 		case "down":
-			board[snake[0][0] + 1][snake[0][0]] = 2;
+			board[snake[0][0] + 1][snake[0][1]] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
 			for (let i = last; i > 0; i--)
 			{
@@ -51,6 +92,12 @@ const moveSnake = (board, snake, direction) =>
 				snake[i][1] = snake[i-1][1];
 			}
 			snake[0][0]++;
+			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1])
+			{
+				snake.push([snake[last][0] - 1, snake[last][1]]);
+				board[snake[last+1][0]][snake[last+1][1]] = 2;
+				changeFruitPos(board, snake, fruitPos);
+			}
 			break;
 	}
 }
@@ -67,34 +114,43 @@ const boxType = num =>
 	}
 }
 let playerPos = [[10,10], [10,11], [10,12], [10, 13]]; //[11,10], [10,10], [10,11], [10, 12];
-let fruitPos = getRandPos();
-//rows[fruitPos[0]][fruitPos[1]] = 1;
+let fruitPos = [16, 10];
+rows[fruitPos[0]][fruitPos[1]] = 1;
 playerPos.forEach(p => rows[p[0]][p[1]] = 2);
-console.log(playerPos);
 
-const Board = () =>
+export default class Board extends React.Component 
 {
-	const [board, setBoard] = useState(rows);
-	setInterval(() => 
+    constructor(props) 
 	{
-		moveSnake(rows, playerPos, "left");
-		console.log(playerPos);
-		setBoard(rows);
-	}, 5000);
-
-	return (
-		<div className='Board'>
-			{board.map((r, ri) => 
-			(
-				<div key={ri} className='row'>
-					{r.map((b, bi) => 
-					(
-						<div key={bi} className={boxType(b)}></div>
-					))}
-				</div>
-			))}
-		</div>
-	);
-}
-
-export default Board;
+        super(props);
+        this.state = { board: rows, snake: playerPos };
+    }
+    componentDidMount() 
+	{
+        setInterval(() => 
+		{
+            this.setState(state => 
+			{
+                moveSnake(state.board, state.snake, fruitPos, "down");
+                return { board: state.board, snake: state.snake };
+            });
+        }, 1000);
+    }
+	render() 
+	{
+		return (
+			<div className='Board'>
+				<h1>Score: {this.state.snake.length}</h1>
+				{this.state.board.map((r, ri) => 
+				(
+					<div key={ri} className='row'>
+						{r.map((b, bi) => 
+						(
+							<div key={bi} className={boxType(b)}></div>
+						))}
+					</div>
+				))}
+			</div>
+		);
+	};
+};
