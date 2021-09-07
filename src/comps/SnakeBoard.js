@@ -7,7 +7,7 @@ for (let i = 0; i < size; i++)
 for (let i = 0; i < size; i++)
 	for (let j = 0; j < size; j++)
 		rows[i][j] = 0;
-let direction = "down";
+let direction = "right";
 window.addEventListener('keydown', e => 
 {
 	console.log(e.key);
@@ -148,11 +148,11 @@ const boxType = num =>
 			return "blue-box";
 	}
 }
-let playerPos = [[10, 10]];
+let playerPos = [[10, 5]];
 let fruitPos = changeFruitPos(rows, playerPos);
 rows[fruitPos[0]][fruitPos[1]] = 1;
 rows[playerPos[0][0]][playerPos[0][1]] = 2;
-let paused = false;
+let paused = true;
 
 export default class Board extends React.Component 
 {
@@ -180,6 +180,8 @@ export default class Board extends React.Component
 	{
 		return (
 			<div className='Board'>
+				<h1>Press spacebar to start/toggle pause.</h1>
+				<h1>Use arrow keys to move.</h1>
 				<h1>Score: {this.state.snake.length}</h1>
 				{this.state.board.map((r, ri) =>
 				(

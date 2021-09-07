@@ -72,7 +72,6 @@ const App = () =>
 	return (
 		<Router>
     		<div className="container">
-				<Header onToggle={toggleAddForm} formShowing={showAddTask}></Header>
 				<Route path='/' exact render={props => (
 					<>
 					{speed !== 0 ? <Board speed={speed}></Board> : <SpeedPrompt setSpeed={setSpeed}/>}
