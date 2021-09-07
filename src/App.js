@@ -60,7 +60,12 @@ const App = () =>
 	};
 	const [showAddTask, setShowAddTask] = useState(false);
 	const toggleAddForm = () => setShowAddTask(!showAddTask);
-	let speed = 50;
+	let speed = 100;
+	let answer = prompt("Enter the difficulty (easy, normal, or hard): ");
+	if (answer === "easy")
+		speed = 150;
+	else if (answer === "hard")
+		speed = 50;
 
 	return (
 		<Router>
