@@ -60,6 +60,7 @@ const App = () =>
 	};
 	const [showAddTask, setShowAddTask] = useState(false);
 	const toggleAddForm = () => setShowAddTask(!showAddTask);
+	let speed = 50;
 
 	return (
 		<Router>
@@ -67,7 +68,7 @@ const App = () =>
 				<Header onToggle={toggleAddForm} formShowing={showAddTask}></Header>
 				<Route path='/' exact render={props => (
 					<>
-					<Board></Board>
+					<Board speed={speed}></Board>
 					{/*showAddTask ? <AddTask onSave={addTask}></AddTask> : <div></div>}
 					{tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onDubClick={toggleReminder}></Tasks> : <p>No tasks</p>*/}
 					</>
