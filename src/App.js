@@ -5,6 +5,7 @@ import AddTask from './components/AddTask.js';
 import Footer from './components/Footer.js';
 import About from './components/About.js';
 import Board from './comps/SnakeBoard';
+import SpeedPrompt from './comps/SpeedPrompt.js';
 import {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 
@@ -60,12 +61,13 @@ const App = () =>
 	};
 	const [showAddTask, setShowAddTask] = useState(false);
 	const toggleAddForm = () => setShowAddTask(!showAddTask);
-	let speed = 100;
-	let answer = prompt("Enter the difficulty (easy, normal, or hard): ");
+	
+	const [speed, setSpeed] = useState(0);
+	/*let answer = prompt("Enter the difficulty (easy, normal, or hard): ");
 	if (answer === "easy")
 		speed = 150;
 	else if (answer === "hard")
-		speed = 50;
+		speed = 50;*/
 
 	return (
 		<Router>
@@ -73,7 +75,7 @@ const App = () =>
 				<Header onToggle={toggleAddForm} formShowing={showAddTask}></Header>
 				<Route path='/' exact render={props => (
 					<>
-					<Board speed={speed}></Board>
+					{speed !== 0 ? <Board speed={speed}></Board> : <SpeedPrompt setSpeed={setSpeed}/>}
 					{/*showAddTask ? <AddTask onSave={addTask}></AddTask> : <div></div>}
 					{tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onDubClick={toggleReminder}></Tasks> : <p>No tasks</p>*/}
 					</>
