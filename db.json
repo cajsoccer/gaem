@@ -18,5 +18,25 @@
       "reminder": true,
       "id": 3
     }
+  ],
+  "players": [
+	{
+		"userProfileId": "72b74f3e-6d4f-42bd-82ad-dc42e25c82f4",
+		"username": "King Radovid",
+		"highScore": 39,
+		"userProfileImageLink": "40140.jpg"
+	},
+	{
+		"userProfileId": "12c5b0e3-b206-4650-81f2-d3f371bacacc",
+		"username": "King Henselt",
+		"highScore": 10,
+		"userProfileImageLink": "48005.jpg"
+	},
+	{
+		"userProfileId": "a725875d-1d65-4b16-8e3f-699d5a5ebf1a",
+		"username": "King Foltest",
+		"highScore": 22,
+		"userProfileImageLink": "40162.jpg"
+	}
   ]
 }

@@ -139,3 +139,26 @@ footer {
 	outline: 2px solid rgb(59, 36, 189);
 	display: inline-block;
 }
+
+.gold-cell {
+	background-color: gold;
+	outline: 2px solid black;
+}
+
+.silver-cell {
+	background-color: silver;
+	outline: 2px solid black;
+}
+
+.bronze-cell {
+	background-color: rgb(189, 128, 37);
+	outline: 2px solid black;
+}
+
+.row-element {
+	outline: 1px solid black;
+}
+
+.table {
+	outline: 3px solid black;
+}

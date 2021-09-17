@@ -4,8 +4,13 @@ import Tasks from './components/Tasks.js';
 import AddTask from './components/AddTask.js';
 import Footer from './components/Footer.js';
 import About from './components/About.js';
-import Board from './comps/SnakeBoard';
+import Board from './comps/SnakeBoard.js';
+import Leaderboard from './comps/Leaderboard.js';
 import SpeedPrompt from './comps/SpeedPrompt.js';
+import Top from './comps/Top.js';
+import Login from './comps/Login.js';
+import SignUp from './comps/SignUp.js';
+import Account from './comps/Account.js';
 import {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 
@@ -17,7 +22,7 @@ const App = () =>
 		{name: "Charles", age: 32},
 		{name: "Gypsy-Whore", age: 23},
 		{name: "Ben", age: 20}
-	];*/
+	];
 	const [tasks, setTasks] = useState({});
 	const fetchTasks = async () => 
 	{
@@ -60,27 +65,48 @@ const App = () =>
 		setTasks([...tasks, data]);
 	};
 	const [showAddTask, setShowAddTask] = useState(false);
-	const toggleAddForm = () => setShowAddTask(!showAddTask);
+	const toggleAddForm = () => setShowAddTask(!showAddTask);*/
 	
 	const [speed, setSpeed] = useState(0);
-	/*let answer = prompt("Enter the difficulty (easy, normal, or hard): ");
-	if (answer === "easy")
-		speed = 150;
-	else if (answer === "hard")
-		speed = 50;*/
+	/*const [user, setUser] = useState({
+		"userProfileId": "72b74f3e-6d4f-42bd-82ad-dc42e25c82f4",
+		"username": "King Radovid",
+		"password": "Tretogor",
+		"highScore": 50,
+		"userProfileImageLink": null
+	});*/
+	const [user, setUser] = useState(null);
+	const logIn = userData => setUser(userData);
+	const logOut = () => setUser(null);
+	const changeAvatar = updatedUserData => setUser(updatedUserData);
+	setInterval(() => console.log(user), 5000);
 
 	return (
 		<Router>
     		<div className="container">
+				<Top user={user} logOut={logOut}/>
 				<Route path='/' exact render={props => (
 					<>
-					{speed !== 0 ? <Board speed={speed}></Board> : <SpeedPrompt setSpeed={setSpeed}/>}
-					{/*showAddTask ? <AddTask onSave={addTask}></AddTask> : <div></div>}
-					{tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onDubClick={toggleReminder}></Tasks> : <p>No tasks</p>*/}
+						{speed !== 0 ? <Board speed={speed}></Board> : <SpeedPrompt setSpeed={setSpeed}/>}
+						<Footer/>
 					</>
 				)}/>
-				<Route path='/about' component={About}/>
-					<Footer/>
+				<Route path='/leaderboard' component={Leaderboard}/>
+				<Route path='/signin' exact render={props => (
+					<>
+						<Login logIn={logIn}/>
+					</>
+				)}/>
+				<Route path='/signup' exact render={props => (
+					<>
+						<SignUp logIn={logIn}/>
+					</>
+				)}/>
+				<Route path='/account' exact render={props => (
+					<>
+						<Account user={user} changeAvatar={changeAvatar}/>
+					</>
+				)}/>
     		</div>
 		</Router>
 		
