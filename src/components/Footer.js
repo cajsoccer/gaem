@@ -2,8 +2,7 @@ const Footer = props =>
 {
 	return (
 		<footer>
-			<p>Copyright &copy; 2021</p>
-			<a href='/Leaderboard'>Leaderboard</a>
+			<div>Copyright &copy; 2021</div>&nbsp;-&nbsp;<a href='/Leaderboard'>Leaderboard</a>
 		</footer>
 	);
 }

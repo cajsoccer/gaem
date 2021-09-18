@@ -1,26 +1,25 @@
 
 
-const Top = props => 
-{
+const Top = props => {
 	return (
-		<div>
+		<div className="navbar">
 			<a href='/'>Home </a>
 			<a href='/leaderboard'>Leaderboard</a>
 			{props.user !== null ?
-			<> 
-				<a href='/account'>
-					{props.user.userProfileImageLink !== null ?
-					<img src={`http://localhost:8080/leaderboard/${props.user.userProfileId}/image/download`}/> 
-					: 
-					<img src={'https://upload.wikimedia.org/wikipedia/commons/e/e0/SNice.svg'}/>}
-				</a> 
-				<button onClick={() => props.logOut()}>Log Out</button> 
-			</> 
-			: 
-			<> 
-				<a href='./signup'>Sign Up</a> 
-				<a href='/signin'>Sign In</a> 
-			</>}
+				<div className="account-header">
+					<button className="logout-button" onClick={() => props.logOut()}>Log Out</button>
+					<a href='/account'>
+						{props.user.userProfileImageLink !== null ?
+							<img className="profile-pic" src={`http://localhost:8080/leaderboard/${props.user.userProfileId}/image/download`} />
+							:
+							<img className="profile-pic" src={'https://upload.wikimedia.org/wikipedia/commons/e/e0/SNice.svg'} />}
+					</a>
+				</div>
+				:
+				<>
+					<a href='./signup'>Sign Up</a>
+					<a href='/signin'>Sign In</a>
+				</>}
 		</div>
 	);
 }
