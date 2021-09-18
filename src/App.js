@@ -75,11 +75,18 @@ const App = () =>
 		"highScore": 50,
 		"userProfileImageLink": null
 	});*/
-	const [user, setUser] = useState(null);
-	const logIn = userData => setUser(userData);
-	const logOut = () => setUser(null);
-	const changeAvatar = updatedUserData => setUser(updatedUserData);
-	setInterval(() => console.log(user), 5000);
+	const [user, setUser] = useState(JSON.parse(window.localStorage.getItem('user')) || null);
+	const logIn = data => {
+		window.localStorage.setItem('user', JSON.stringify(data));
+		setUser(data);
+	}
+	const logOut = () => {
+		window.localStorage.removeItem('user');
+		setUser(null);
+	}
+	const changeAvatar = updatedUserData => {
+		logIn(updatedUserData);
+	}
 
 	return (
 		<Router>
