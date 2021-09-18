@@ -8,11 +8,9 @@ for (let i = 0; i < size; i++)
 	for (let j = 0; j < size; j++)
 		rows[i][j] = 0;
 let direction = "right";
-window.addEventListener('keydown', e => 
-{
+window.addEventListener('keydown', e => {
 	console.log(e.key);
-	switch (e.key) 
-	{
+	switch (e.key) {
 		case "ArrowDown":
 			if (direction !== "up")
 				direction = "down";
@@ -42,13 +40,11 @@ const snakeBitSelf = (oldSnake, newHead) => {
 	return false;
 }
 const gameOver = snake => alert(`Game Over. Your score is: ${snake.length}`);
-const changeFruitPos = (board, snake) => 
-{
+const changeFruitPos = (board, snake) => {
 	let randPos = getRandPos();
 	let randPosInSnake = false;
 	snake.forEach(b => { if (b[0] === randPos[0] && b[1] === randPos[1]) randPosInSnake = true; });
-	while (randPosInSnake) 
-	{
+	while (randPosInSnake) {
 		randPos = getRandPos();
 		randPosInSnake = false;
 		snake.forEach(b => { if (b[0] === randPos[0] && b[1] === randPos[1]) randPosInSnake = true; });
@@ -57,8 +53,7 @@ const changeFruitPos = (board, snake) =>
 	board[fruitPos[0]][fruitPos[1]] = 1;
 	return fruitPos;
 }
-const moveSnake = (board, snake, fruitPos, direction) => 
-{
+const moveSnake = (board, snake, fruitPos, direction) => {
 	let last = snake.length - 1;
 	switch (direction) {
 		case "left":
@@ -66,14 +61,12 @@ const moveSnake = (board, snake, fruitPos, direction) =>
 				gameOver(snake);
 			board[snake[0][0]][snake[0][1] - 1] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
-			for (let i = last; i > 0; i--) 
-			{
+			for (let i = last; i > 0; i--) {
 				snake[i][0] = snake[i - 1][0];
 				snake[i][1] = snake[i - 1][1];
 			}
 			snake[0][1]--;
-			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1]) 
-			{
+			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1]) {
 				snake.push([snake[last][0], snake[last][1] + 1]);
 				board[snake[last + 1][0]][snake[last + 1][1]] = 2;
 				fruitPos = changeFruitPos(board, snake, fruitPos);
@@ -84,14 +77,12 @@ const moveSnake = (board, snake, fruitPos, direction) =>
 				gameOver(snake);
 			board[snake[0][0]][snake[0][1] + 1] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
-			for (let i = last; i > 0; i--) 
-			{
+			for (let i = last; i > 0; i--) {
 				snake[i][0] = snake[i - 1][0];
 				snake[i][1] = snake[i - 1][1];
 			}
 			snake[0][1]++;
-			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1]) 
-			{
+			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1]) {
 				snake.push([snake[last][0], snake[last][1] - 1]);
 				board[snake[last + 1][0]][snake[last + 1][1]] = 2;
 				fruitPos = changeFruitPos(board, snake, fruitPos);
@@ -102,14 +93,12 @@ const moveSnake = (board, snake, fruitPos, direction) =>
 				gameOver(snake);
 			board[snake[0][0] - 1][snake[0][1]] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
-			for (let i = last; i > 0; i--) 
-			{
+			for (let i = last; i > 0; i--) {
 				snake[i][0] = snake[i - 1][0];
 				snake[i][1] = snake[i - 1][1];
 			}
 			snake[0][0]--;
-			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1]) 
-			{
+			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1]) {
 				snake.push([snake[last][0] + 1, snake[last][1]]);
 				board[snake[last + 1][0]][snake[last + 1][1]] = 2;
 				fruitPos = changeFruitPos(board, snake, fruitPos);
@@ -120,14 +109,12 @@ const moveSnake = (board, snake, fruitPos, direction) =>
 				gameOver(snake);
 			board[snake[0][0] + 1][snake[0][1]] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
-			for (let i = last; i > 0; i--) 
-			{
+			for (let i = last; i > 0; i--) {
 				snake[i][0] = snake[i - 1][0];
 				snake[i][1] = snake[i - 1][1];
 			}
 			snake[0][0]++;
-			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1]) 
-			{
+			if (snake[0][0] === fruitPos[0] && snake[0][1] === fruitPos[1]) {
 				snake.push([snake[last][0] - 1, snake[last][1]]);
 				board[snake[last + 1][0]][snake[last + 1][1]] = 2;
 				fruitPos = changeFruitPos(board, snake);
@@ -136,10 +123,8 @@ const moveSnake = (board, snake, fruitPos, direction) =>
 	}
 	return { board, snake, fruitPos };
 }
-const boxType = num => 
-{
-	switch (num) 
-	{
+const boxType = num => {
+	switch (num) {
 		case 0:
 			return "box";
 		case 1:
@@ -154,44 +139,41 @@ rows[fruitPos[0]][fruitPos[1]] = 1;
 rows[playerPos[0][0]][playerPos[0][1]] = 2;
 let paused = true;
 
-export default class Board extends React.Component 
-{
-	constructor(props) 
-	{
+export default class Board extends React.Component {
+	constructor(props) {
 		super(props);
 		this.state = { board: rows, snake: playerPos, fruitPos: fruitPos };
 	}
-	componentDidMount() 
-	{
-		this.ticker = setInterval(() => 
-			{
-				if (!paused)
-				{
-					let newState = moveSnake(this.state.board, this.state.snake, this.state.fruitPos, direction);
-					this.setState(newState);
-				}
-			}, this.props.speed);
+	componentDidMount() {
+		this.ticker = setInterval(() => {
+			if (!paused) {
+				let newState = moveSnake(this.state.board, this.state.snake, this.state.fruitPos, direction);
+				this.setState(newState);
+			}
+		}, this.props.speed);
 	}
-	componentWillUnmount() 
-	{
+	componentWillUnmount() {
 		clearInterval(this.ticker);
 	}
-	render() 
-	{
+	render() {
 		return (
 			<div className='Board'>
 				<h1>Press spacebar to start/toggle pause.</h1>
 				<h1>Use arrow keys to move.</h1>
 				<h1>Score: {this.state.snake.length}</h1>
-				{this.state.board.map((r, ri) =>
-				(
-					<div key={ri} className='row'>
-						{r.map((b, bi) =>
+				<div className='Board-container'>
+					<div className="Board-center">
+						{this.state.board.map((r, ri) =>
 						(
-							<div key={bi} className={boxType(b)}></div>
+							<div key={ri} className='row'>
+								{r.map((b, bi) =>
+								(
+									<div key={bi} className={boxType(b)}></div>
+								))}
+							</div>
 						))}
 					</div>
-				))}
+				</div>
 			</div>
 		);
 	};

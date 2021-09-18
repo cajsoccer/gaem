@@ -40,7 +40,7 @@ const Leaderboard = props =>
 				{
 					return (
 						<tr key={index} className={getRowType(index + 1)}>
-							<th className="row-element">{p.userProfileImageLink != null ? <img src={`http://localhost:8080/leaderboard/${p.userProfileId}/image/download`}/> : <img src='https://upload.wikimedia.org/wikipedia/commons/e/e0/SNice.svg'/>}</th>
+							<th className="row-element">{p.userProfileImageLink != null ? <img className="profile-pic" src={`http://localhost:8080/leaderboard/${p.userProfileId}/image/download`}/> : <img className="profile-pic" src='https://upload.wikimedia.org/wikipedia/commons/e/e0/SNice.svg'/>}</th>
 							<th className="row-element">{p.username}</th>
 							<th className="row-element">{p.highScore}</th>
 						</tr>
