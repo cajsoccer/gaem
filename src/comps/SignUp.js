@@ -47,7 +47,7 @@ const SignUp = props =>
 		let pushObj = {userProfileId: randId, username: username, password: password, highScore: 0};
 		console.log(pushObj);
 		let res = await axios.post(`http://localhost:8080/leaderboard/create`, pushObj);
-		props.logIn(res.data);
+		props.logIn(pushObj);
 		setUsername('');
 		setPassword('');
 	}

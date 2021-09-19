@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios";
 
 let size = 20;
 let rows = new Array(size);
@@ -39,10 +40,6 @@ const snakeBitSelf = (oldSnake, newHead) => {
 			return true;
 	return false;
 }
-const gameOver = snake => 
-{
-	alert(`Game Over. Your score is: ${snake.length}`);
-}
 const changeFruitPos = (board, snake) => {
 	let randPos = getRandPos();
 	let randPosInSnake = false;
@@ -60,8 +57,6 @@ const moveSnake = (board, snake, fruitPos, direction) => {
 	let last = snake.length - 1;
 	switch (direction) {
 		case "left":
-			if (snake[0][1] === 0 || snakeBitSelf(snake, [snake[0][0], snake[0][1] - 1]))
-				gameOver(snake);
 			board[snake[0][0]][snake[0][1] - 1] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
 			for (let i = last; i > 0; i--) {
@@ -76,8 +71,6 @@ const moveSnake = (board, snake, fruitPos, direction) => {
 			}
 			break;
 		case "right":
-			if (snake[0][1] === size - 1 || snakeBitSelf(snake, [snake[0][0], snake[0][1] + 1]))
-				gameOver(snake);
 			board[snake[0][0]][snake[0][1] + 1] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
 			for (let i = last; i > 0; i--) {
@@ -92,8 +85,6 @@ const moveSnake = (board, snake, fruitPos, direction) => {
 			}
 			break;
 		case "up":
-			if (snake[0][0] === 0 || snakeBitSelf(snake, [snake[0][0] - 1, snake[0][1]]))
-				gameOver(snake);
 			board[snake[0][0] - 1][snake[0][1]] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
 			for (let i = last; i > 0; i--) {
@@ -108,8 +99,6 @@ const moveSnake = (board, snake, fruitPos, direction) => {
 			}
 			break;
 		case "down":
-			if (snake[0][0] === size - 1 || snakeBitSelf(snake, [snake[0][0] + 1, snake[0][1]]))
-				gameOver(snake);
 			board[snake[0][0] + 1][snake[0][1]] = 2;
 			board[snake[last][0]][snake[last][1]] = 0;
 			for (let i = last; i > 0; i--) {
@@ -147,9 +136,50 @@ export default class Board extends React.Component {
 		super(props);
 		this.state = { board: rows, snake: playerPos, fruitPos: fruitPos };
 	}
+	async gameOver()
+	{
+		if (this.props.user !== null && this.state.snake.length > this.props.user.highScore)
+		{
+			let pushObj = 
+			{
+				userProfileId: this.props.user.userProfileId,
+				username: this.props.user.username,
+				password: this.props.user.password,
+				highScore: this.state.snake.length, 
+				userProfileImageLink: this.props.user.userProfileImageLink
+			};
+			this.props.updateScore(pushObj);
+			let res = await axios.post(`http://localhost:8080/leaderboard/newScore`, pushObj);
+			alert('New High Score!');
+		}
+		alert('Game Over');
+	}
+	checkSnake(snake)
+	{
+		switch (direction)
+		{
+			case "left":
+				if (snake[0][1] === 0 || snakeBitSelf(snake, [snake[0][0], snake[0][1] - 1]))
+					this.gameOver();
+				break;
+			case "right": 
+				if (snake[0][1] === size - 1 || snakeBitSelf(snake, [snake[0][0], snake[0][1] + 1]))
+					this.gameOver();
+				break;
+			case "up": 
+				if (snake[0][0] === 0 || snakeBitSelf(snake, [snake[0][0] - 1, snake[0][1]]))
+					this.gameOver();
+				break;
+			case "down":
+				if (snake[0][0] === size - 1 || snakeBitSelf(snake, [snake[0][0] + 1, snake[0][1]]))
+					this.gameOver();
+				break;
+		}
+	}
 	componentDidMount() {
 		this.ticker = setInterval(() => {
 			if (!paused) {
+				this.checkSnake(this.state.snake);
 				let newState = moveSnake(this.state.board, this.state.snake, this.state.fruitPos, direction);
 				this.setState(newState);
 			}

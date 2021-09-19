@@ -75,7 +75,7 @@ const App = () =>
 		"highScore": 50,
 		"userProfileImageLink": null
 	});*/
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState(JSON.parse(window.localStorage.getItem('user')) || null);
 	const logIn = data => {
 		window.localStorage.setItem('user', JSON.stringify(data));
 		setUser(data);
@@ -87,6 +87,7 @@ const App = () =>
 	const changeAvatar = updatedUserData => {
 		logIn(updatedUserData);
 	}
+	setInterval(console.log(user), 5000);
 
 	return (
 		<Router>
@@ -94,7 +95,7 @@ const App = () =>
 				<Top user={user} logOut={logOut}/>
 				<Route path='/' exact render={props => (
 					<>
-						{speed !== 0 ? <Board speed={speed}></Board> : <SpeedPrompt setSpeed={setSpeed}/>}
+						{speed !== 0 ? <Board speed={speed} user={user} updateScore={logIn}></Board> : <SpeedPrompt setSpeed={setSpeed}/>}
 						<Footer/>
 					</>
 				)}/>
