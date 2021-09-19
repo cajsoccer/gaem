@@ -50,7 +50,7 @@ const SignUp = props =>
 		setPassword('');
 	}
 	return (
-		<div>
+		<div class="account-enter">
 			<h1>Create an Account:</h1>
 			<form onSubmit={onSubmit}>
 				<div>

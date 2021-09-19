@@ -28,7 +28,7 @@ const Login = props =>
 		setPassword('');
 	}
 	return (
-		<div>
+		<div class="account-enter">
 			<h1>Log in:</h1>
 			<form onSubmit={onSubmit}>
 				<div>

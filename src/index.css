@@ -192,3 +192,8 @@ footer {
 h2 {
   text-align: center;
 }
+
+.account-enter {
+  display: grid;
+  justify-content: center;
+}
