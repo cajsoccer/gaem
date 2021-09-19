@@ -18,8 +18,6 @@ const Login = props =>
 			alert('Please enter a password');
 			return;
 		}
-		//props.onSave({username: username, password: password});
-		//API call to insert into database
 		let res = await axios.get(`http://localhost:8080/leaderboard/login?username=${username}&password=${password}`);
 		console.log(res);
 		if (res.data === "")
@@ -34,11 +32,11 @@ const Login = props =>
 			<h1>Log in:</h1>
 			<form onSubmit={onSubmit}>
 				<div>
-					<label>Username</label>
+					<label>Username: </label>
 					<input type='text' placeholder='Enter Username Here' value={username} onChange={e => setUsername(e.target.value)}/>
 				</div>
 				<div>
-					<label>Password</label>
+					<label>Password: </label>
 					<input type='text' placeholder='Enter Password Here' value={password} onChange={e => setPassword(e.target.value)}/>
 				</div>
 				<input type='submit' value='Sign In'/>

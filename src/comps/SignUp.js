@@ -41,13 +41,11 @@ const SignUp = props =>
 		});
 		if (usernameAlreadyExists) 
 			return;
-		//props.onSave({username: username, password: password});
-		//API call to insert into database
 		let randId = uuidv4();
 		let pushObj = {userProfileId: randId, username: username, password: password, highScore: 0};
 		console.log(pushObj);
 		let res = await axios.post(`http://localhost:8080/leaderboard/create`, pushObj);
-		props.logIn(pushObj);
+		props.logIn({...pushObj, userProfileImageLink: null});
 		setUsername('');
 		setPassword('');
 	}
@@ -56,11 +54,11 @@ const SignUp = props =>
 			<h1>Create an Account:</h1>
 			<form onSubmit={onSubmit}>
 				<div>
-					<label>Username</label>
+					<label>Username: </label>
 					<input type='text' placeholder='Enter Username Here' value={username} onChange={e => setUsername(e.target.value)}/>
 				</div>
 				<div>
-					<label>Password</label>
+					<label>Password: </label>
 					<input type='text' placeholder='Enter Password Here' value={password} onChange={e => setPassword(e.target.value)}/>
 				</div>
 				<input type='submit' value='Create Account'/>

@@ -1,5 +1,3 @@
-
-
 const Top = props => {
 	return (
 		<div className="navbar">

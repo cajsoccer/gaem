@@ -1,9 +1,3 @@
-//import ButtonList from './altcomps/ButtonList.js';
-import Header from './components/Header.js';
-import Tasks from './components/Tasks.js';
-import AddTask from './components/AddTask.js';
-import Footer from './components/Footer.js';
-import About from './components/About.js';
 import Board from './comps/SnakeBoard.js';
 import Leaderboard from './comps/Leaderboard.js';
 import SpeedPrompt from './comps/SpeedPrompt.js';
@@ -16,57 +10,6 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 const App = () => 
 {
-	/*let people = 
-	[
-		{name: "Richard", age: 22},
-		{name: "Charles", age: 32},
-		{name: "Gypsy-Whore", age: 23},
-		{name: "Ben", age: 20}
-	];
-	const [tasks, setTasks] = useState({});
-	const fetchTasks = async () => 
-	{
-		const res = await fetch('http://localhost:5000/tasks');
-		const data = await res.json();
-		return data;
-	}
-	const fetchTask = async id => 
-	{
-		const res = await fetch(`http://localhost:5000/tasks/${id}`);
-		const data = await res.json();
-		return data;
-	}
-	useEffect(() => 
-	{
-		const getTasks = async () => 
-		{
-			const tasksFromServer = await fetchTasks();
-			setTasks(tasksFromServer);
-		}
-		getTasks();
-	}, []);
-
-	const deleteTask = async id => 
-	{
-		await fetch(`http://localhost:5000/tasks/${id}`, {method: 'DELETE'});
-		setTasks(tasks.filter(t => t.id !== id))
-	};
-	const toggleReminder = async id => 
-	{
-		let taskToToggle = await fetchTask(id);
-		let updatedTask = {...taskToToggle, reminder: !taskToToggle.reminder};
-		await fetch(`http://localhost:5000/tasks/${id}`, {method: 'PUT', headers: {'Content-type': 'application/json'}, body: JSON.stringify(updatedTask)});
-		setTasks(tasks.map(t => (t.id === id) ? {...t, reminder: !t.reminder}: t));
-	};
-	const addTask = async task => 
-	{
-		let res = await fetch(`http://localhost:5000/tasks`, {method: 'POST', headers: {'Content-type': 'application/json'}, body: JSON.stringify(task)});
-		let data = await res.json();
-		setTasks([...tasks, data]);
-	};
-	const [showAddTask, setShowAddTask] = useState(false);
-	const toggleAddForm = () => setShowAddTask(!showAddTask);*/
-	
 	const [speed, setSpeed] = useState(0);
 	/*const [user, setUser] = useState({
 		"userProfileId": "72b74f3e-6d4f-42bd-82ad-dc42e25c82f4",
@@ -96,7 +39,6 @@ const App = () =>
 				<Route path='/' exact render={props => (
 					<>
 						{speed !== 0 ? <Board speed={speed} user={user} updateScore={logIn}></Board> : <SpeedPrompt setSpeed={setSpeed}/>}
-						<Footer/>
 					</>
 				)}/>
 				<Route path='/leaderboard' component={Leaderboard}/>
