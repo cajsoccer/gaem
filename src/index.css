@@ -281,3 +281,21 @@ footer {
   border : none;
   padding: 5px;
 }
+
+#avatar {
+  width: 300px;
+}
+
+#avatar-container {
+  display: grid;
+  justify-content: center;
+}
+
+#account-container {
+  display: grid;
+  justify-content: center;
+}
+
+h2 {
+  text-align: center;
+}
