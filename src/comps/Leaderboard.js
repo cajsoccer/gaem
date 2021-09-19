@@ -29,8 +29,8 @@ const Leaderboard = props =>
 	}
 
 	return (
-		<div>
-			<table className="table">
+		<div className="leaderboard-container">
+			<table className="leaderboard">
 				<tr>
 		  			<th className="row-element">Avatar</th>
 		 			<th className="row-element">User</th>
@@ -46,8 +46,7 @@ const Leaderboard = props =>
 						</tr>
 					);
 				})}
-			</table> 
-			<a href='/'>Back to the Game</a>
+			</table>
 		</div>
 	);
 };
