@@ -75,7 +75,7 @@ const App = () =>
 		"highScore": 50,
 		"userProfileImageLink": null
 	});*/
-	const [user, setUser] = useState(JSON.parse(window.localStorage.getItem('user')) || null);
+	const [user, setUser] = useState(null);
 	const logIn = data => {
 		window.localStorage.setItem('user', JSON.stringify(data));
 		setUser(data);

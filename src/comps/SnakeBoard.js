@@ -39,7 +39,10 @@ const snakeBitSelf = (oldSnake, newHead) => {
 			return true;
 	return false;
 }
-const gameOver = snake => alert(`Game Over. Your score is: ${snake.length}`);
+const gameOver = snake => 
+{
+	alert(`Game Over. Your score is: ${snake.length}`);
+}
 const changeFruitPos = (board, snake) => {
 	let randPos = getRandPos();
 	let randPosInSnake = false;

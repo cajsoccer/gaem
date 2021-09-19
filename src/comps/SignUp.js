@@ -11,6 +11,11 @@ const SignUp = props =>
 		  return v.toString(16);
 		});
 	}
+	const getPlayers = async () => 
+	{
+		let res = await axios.get("http://localhost:8080/leaderboard");
+		return res.data;
+	};
 	const onSubmit = async e =>
 	{
 		e.preventDefault();
@@ -24,6 +29,18 @@ const SignUp = props =>
 			alert('Please enter a password');
 			return;
 		}
+		let players = await getPlayers();
+		let usernameAlreadyExists = false;
+		players.forEach(p => 
+		{
+			if (p.username === username)
+			{
+				alert('Username already taken, please enter another one')
+				usernameAlreadyExists = true;
+			}
+		});
+		if (usernameAlreadyExists) 
+			return;
 		//props.onSave({username: username, password: password});
 		//API call to insert into database
 		let randId = uuidv4();
