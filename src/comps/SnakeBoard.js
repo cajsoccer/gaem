@@ -150,9 +150,11 @@ export default class Board extends React.Component {
 			};
 			this.props.updateScore(pushObj);
 			let res = await axios.post(`http://localhost:8080/leaderboard/newScore`, pushObj);
-			alert('New High Score!');
+			alert('Game Over, New High Score!');
 		}
-		alert('Game Over');
+		else
+			alert('Game Over!')
+		window.location.reload(false); 
 	}
 	checkSnake(snake)
 	{
@@ -191,7 +193,7 @@ export default class Board extends React.Component {
 	render() {
 		return (
 			<div className='Board'>
-				<h1>Press spacebar to start/toggle pause.</h1>
+				<h1>Press spacebar to toggle pause/start.</h1>
 				<h1>Use arrow keys to move.</h1>
 				<h1>Score: {this.state.snake.length}</h1>
 				<div className='Board-container'>

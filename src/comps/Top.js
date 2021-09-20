@@ -8,9 +8,9 @@ const Top = props => {
 					<button className="logout-button" onClick={() => props.logOut()}>Log Out</button>
 					<a href='/account'>
 						{props.user.userProfileImageLink !== null ?
-							<img className="profile-pic" src={`http://localhost:8080/leaderboard/${props.user.userProfileId}/image/download`} />
+							<img className="bar-pic" src={`http://localhost:8080/leaderboard/${props.user.userProfileId}/image/download`} />
 							:
-							<img className="profile-pic" src={'https://upload.wikimedia.org/wikipedia/commons/e/e0/SNice.svg'} />}
+							<img className="bar-pic" src={'https://upload.wikimedia.org/wikipedia/commons/e/e0/SNice.svg'} />}
 					</a>
 				</div>
 				:

@@ -137,6 +137,10 @@ footer {
   height: 80px;
 }
 
+.bar-pic{
+	height: 30px;
+}
+
 #speed-prompt {
   margin         : auto;
   display        : grid;
@@ -176,7 +180,8 @@ footer {
 }
 
 #avatar {
-  width: 300px;
+  width: 80px;
+  height:80px;
 }
 
 #avatar-container {

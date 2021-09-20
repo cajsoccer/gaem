@@ -4,11 +4,10 @@ import axios from "axios";
 
 const Account = props => 
 {
-	function MyDropzone({ userProfileId, username, password, highscore }) {
+	function MyDropzone({ userProfileId, username, password, highScore }) {
 		const onDrop = useCallback(acceptedFiles => {
 			const file = acceptedFiles[0];
-			console.log(highscore);
-			props.changeAvatar({ userProfileId: userProfileId, username: username, password: password, highscore: highscore, userProfileImageLink: file.path });
+			props.changeAvatar({ userProfileId: userProfileId, username: username, password: password, highScore: highScore, userProfileImageLink: file.path });
 			console.log(file);
 			const formData = new FormData();
 			formData.append("file", file);
